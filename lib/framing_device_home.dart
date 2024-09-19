@@ -103,7 +103,6 @@ class _FramingDeviceHomeState extends ConsumerState<FramingDeviceHome> {
           },
         ).toList(),
       ),
-      //todo: implement opener fn, make sure this is in all Scaffolds in this file
       floatingActionButton: (connected && screenIndex == 0) ? GestureDetector(
         onLongPress: () async {
           String? dirName = await showPromptDialog(context, title: "Create Directory",

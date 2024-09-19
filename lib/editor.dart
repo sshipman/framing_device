@@ -42,7 +42,7 @@ class _EditorState extends ConsumerState<Editor>{
     ThemeData theme = Theme.of(context);
     var codeThemeStyles = (theme.brightness == Brightness.dark) ? a11yDarkTheme : a11yLightTheme;
     return Scaffold(
-      //todo: add upload, open from file on phone
+      //todo: add open from file on phone
       appBar: AppBar(
         title: TextField(
           controller: fileNameController,

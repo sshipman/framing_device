@@ -5,7 +5,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:frame_sdk/display.dart';
 import 'package:frame_sdk/frame_sdk.dart';
 import 'package:framing_device/models/repl_message.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 import '../models/frame_file_entry.dart';
 
@@ -18,7 +17,7 @@ class FrameNotifier extends ChangeNotifier {
   List<ReplMessage> replMessages = [];
 
   String get browsingPath => _browsingPath;
-  void set browsingPath(String path) {
+  set browsingPath(String path) {
     _browsingPath = path;
     listDir(dir: path).then((List<FrameFileEntry> files){
       _currentFiles = files;
@@ -50,7 +49,7 @@ class FrameNotifier extends ChangeNotifier {
       await frame.display.showText("uploading utility scripts", align: Alignment2D.middleCenter);
       // there doesn't seem to be a way to check the directory directly, so eat the error
       try {
-        await frame.runLua("frame.file.mkdir('/wtf_flax')", timeout: Duration(seconds: 2));
+        await frame.runLua("frame.file.mkdir('/wtf_flax')", timeout: const Duration(seconds: 2));
       } catch(e) {
         print("could not create wtf_flax directory, probably existed already");
       }
@@ -105,8 +104,13 @@ class FrameNotifier extends ChangeNotifier {
   }
 
   Future<void> createDir(String dirPath) async {
-    await frame.runLua('frame.file.mkdir("$dirPath")');
-    await reloadDir();
+    try {
+      await frame.runLua(
+          'frame.file.mkdir("$dirPath")', timeout: Duration(seconds: 2));
+      await reloadDir();
+    } catch (e) {
+      print("could not create directory $dirPath: $e");
+    }
   }
 
   Future<void> renameFile({required String original, required String updated}) async {

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:framing_device/providers/frame_provider.dart';
 
 import 'models/repl_message.dart';
 
 class ReplPage extends ConsumerStatefulWidget {
+  const ReplPage({super.key});
+
   @override
   ConsumerState<ConsumerStatefulWidget> createState() {
     return _ReplState();
